@@ -1,7 +1,7 @@
 //Data 
 const inventory = [
   {
-    id:1,
+    id: 1,
     title: 'Eloquent JavaScript: A Modern Introduction to Programming',
     author: 'Marjin Haverbeke',
     price: 10.00,
@@ -10,7 +10,7 @@ const inventory = [
     imageUrl: 'https://images-na.ssl-images-amazon.com/images/I/51IKycqTPUL._SX218_BO1,204,203,200_QL40_FMwebp_.jpg'
   },
   {
-    id:2,
+    id: 2,
     title: 'JavaScript & JQuery: Interactive Front-End Web Development',
     author: 'Jon Duckett',
     price: 45.75,
@@ -19,7 +19,7 @@ const inventory = [
     imageUrl: 'https://images-na.ssl-images-amazon.com/images/I/31SRWF+LkKL._SX398_BO1,204,203,200_.jpg'
   },
   {
-    id:3,
+    id: 3,
     title: 'JavaScript: The Good Parts',
     author: 'Douglas Crockford',
     price: 36.00,
@@ -28,7 +28,7 @@ const inventory = [
     imageUrl: 'https://images-na.ssl-images-amazon.com/images/I/5131OWtQRaL._SX218_BO1,204,203,200_QL40_FMwebp_.jpg'
   },
   {
-    id:4,
+    id: 4,
     title: 'JavaScript: The Definitive Guide',
     author: 'David Flanagan',
     price: 25.50,
@@ -37,7 +37,7 @@ const inventory = [
     imageUrl: "https://images-na.ssl-images-amazon.com/images/I/51wijnc-Y8L._SX379_BO1,204,203,200_.jpg"
   },
   {
-    id:5,
+    id: 5,
     title: 'You Don’t Know JS',
     author: 'Kyle Simpson',
     price: 6.00,
@@ -46,7 +46,7 @@ const inventory = [
     imageUrl: 'https://images-na.ssl-images-amazon.com/images/I/41T5H8u7fUL._SX331_BO1,204,203,200_.jpg'
   }, 
   {
-    id:6,
+    id: 6,
     title: 'Learn Enough JavaScript to Be Dangerous',
     author: 'Michael Hartl',
     price: 24.00,
@@ -55,11 +55,11 @@ const inventory = [
     imageUrl: 'https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQyf6xSyTHc7a8mx17ikh6GeTohc88Hn0UgkN-RNF-h4iOwVlkW'
   },
   {
-    id:7,
+    id: 7,
     title: 'Cracking the Coding Interview',
     author: 'Gayle Laakmann McDowell',
     price: 49.95,
-    reviews: [{userID: 99, content:'One of the most helpful books for taking on the tech interview'}, {userID:20, content: 'Great but I just wish it was in JavaScript instead of Java' }],
+    reviews: [{userID: 99, content:'One of the most helpful books for taking on the tech interview'}, {userID: 20, content: 'Great but I just wish it was in JavaScript instead of Java' }],
     inventory: 20,
     imageUrl: 'https://images-na.ssl-images-amazon.com/images/I/41oYsXjLvZL._SY344_BO1,204,203,200_.jpg'
   }
@@ -68,20 +68,52 @@ const inventory = [
 // Function ideas:
 /*
 - helloWorld
-- priceFormatter
-- titleAndAuthor
-- applyDiscount(price)
-- randomDiscount
-- generateMarketing(book)
-- buildBook(price, author, imageUrl)
+- formatPrice(price)
+- findHighestPricedBook()
+- blurb(book)
 */
 
-// Arrow functions vs regular functions
+// 💡 Arrow functions vs regular functions
+
+// ✅ create an arrow function version of the formatPrice function
 
 
 
-// Difference between Block scope, Function scope, and Global scope
+// ✅ create a blurb() function that accepts a book as an argument and logs a message in the following format:
+// 'Eloquent JavaScript: A Modern Introduction to Programming by Marjin Haverbeke is on sale for $10.00'
 
 
 
-// Ideas: 
+// 💡 Difference between Block scope, Function scope, and Global scope
+
+// ✅ create a variable `highestPricedBook`
+
+
+
+// ✅ create a function `findHighestPricedBook` that finds that book and returns it
+
+
+
+// After Break
+
+// ✅ Create a function called `log` that takes a function and its argument as arguments
+// and logs a message explaining the name of the function, the argument passed and 
+// the return value 
+
+// 💡 Practice using callbacks for iteration
+
+
+
+// ✅ Create an array of the prices of all of the books
+
+
+
+// ✅ Create an array of simplified book objects
+
+
+
+// ✅ Create an array of strings from the inventory in the following format:
+// 'Eloquent JavaScript: A Modern Introduction to Programming by Marjin Haverbeke is on sale for $10.00'
+
+
+// 💡 When do I use forEach vs map?
