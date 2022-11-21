@@ -102,6 +102,7 @@ Function | Parameters | Behavior
 ---------|----------|---------
  helloWorld | none | returns "Hello, world!"
  formatPrice | price (float) | returns the price like so: "$2.99" 
+ blurb | book (obj) | returns a string representation of the book with title author and price
  findHighestPricedBook | none | returns the book object that has the highest price
 
 </div>
