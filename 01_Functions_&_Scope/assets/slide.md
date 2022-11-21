@@ -109,6 +109,18 @@ Function | Parameters | Behavior
 
 ---
 
+### Callbacks and Higher Order functions
+
+![Callbacks pt1](./callbacks-pt-1.drawio.svg)
+
+---
+
+### Callbacks and Iteration
+
+![Callbacks pt2](./callbacks-pt-2.drawio.svg)
+
+---
+
 ### () => {} vs function() {}
 
 - syntax {.fragment}
