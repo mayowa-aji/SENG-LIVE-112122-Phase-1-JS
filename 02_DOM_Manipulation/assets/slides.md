@@ -81,12 +81,38 @@ https://techcrunch.com/wp-content/uploads/2007/10/picture-242.png
 
 - `renderHeader()`: renders the header content via JS
 - `renderFooter()`: renders the footer content via JS
-- Use `querySelectorAll()` for grabbing content from a website via JS
-- `renderBook()`: create a list item for a book and insert it into the list
+- `renderBook()`: create a list item for a book and inserts it into the list
 - `removeBook(index)`: removes a book li from the DOM by its index in the `ul`
 
 
 ---
+
+#### The Dangers of innerHTML=
+
+<iframe src="https://codesandbox.io/embed/dark-silence-5rbq0x?fontsize=14&hidenavigation=1&theme=dark"
+  style="width:100%; height:700px; border:0; border-radius: 4px; overflow:hidden;"
+  title="dark-silence-5rbq0x"
+  allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
+  sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
+></iframe>
+
+---
+
+#### Bread and Butter tools
+- Create
+  - `document.createElement()`
+- Read
+  - `querySelector()` & `querySelectorAll()`
+- Update 
+  - `textContent =`
+  - `append()`
+  - `classList` for adding and removing classes from an element
+  - dot notation for editing properties (eg. `img.src = "img.url"`, or `div.class = "card"`)
+- Destroy 
+  - `remove()`
+
+---
+
 
 #### Links!
 

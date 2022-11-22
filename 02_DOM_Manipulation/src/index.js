@@ -1,9 +1,9 @@
 //BookStore has been moved to data.js 
 console.log(bookStore);
 
-function priceFormatter(priceNum) {
-  // return `$${priceNum.toFixed(2)}`;
-  return '$' + priceNum.toFixed(2);
+function formatPrice(price) {
+  // return `$${price.toFixed(2)}`;
+  return '$' + Number.parseFloat(price).toFixed(2);
 }
 
 // create a function called renderBook(book)
