@@ -26,7 +26,7 @@ input {
 - Explain how callback functions are used with event listeners
 - Observe how to add a form to a webpage using HTML and JavaScript
 - Observe how onSubmit events are used to receive information from Users via forms
-- Explain the purpose of .preventDefault() method
+- Explain the purpose of the `.preventDefault()` method
 - Use MDN to discover and interact with JavaScript events
 
 
@@ -115,14 +115,14 @@ form.addEventListener('submit', (e) => {
 
 <pre><code data-line-numbers><form>
   <input type="text" name="q" />
-  <input type="submit">Search</input>
+  <input type="submit" />
 </form>
 
 <script>
 const form = document.querySelector('form');
 form.addEventListener('submit', (e) => {
   console.log(form.q);
-}));
+});
 </script></code></pre>
 
 ---
@@ -142,16 +142,17 @@ otherForm.addEventListener('submit', (e) => {
 });
 </script>
 
-<pre><code data-line-numbers><form>
+<pre><code data-line-numbers><form id="otherForm">
   <input type="text" name="q" />
-  <input type="submit">Search</input>
+  <input type="submit" />
 </form>
 
 <script>
-const form = document.querySelector('form');
-form.addEventListener('submit', (e) => {
-  console.log(form.q);
-}));
+const otherForm = document.querySelector('#otherForm');
+otherForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  console.log(otherForm.q.value);
+});
 </script></code></pre>
 
 ---

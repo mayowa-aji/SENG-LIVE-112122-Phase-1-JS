@@ -1,11 +1,12 @@
-renderHeader(bookStore);
-renderFooter(bookStore);
-bookStore.inventory.forEach(renderBook);
-
-function priceFormatter(price) {
-  let formattedPrice = Number(price).toFixed(2);
-  return `$${formattedPrice}`;
+function formatPrice(price) {
+  // return `$${price.toFixed(2)}`;
+  return '$' + Number.parseFloat(price).toFixed(2);
 }
+
+///////////////////
+// render functions
+///////////////////
+
 // create a function renderHeader() that takes the store name from bookStore and adds to the DOM
 function renderHeader(bookStore) {
   document.querySelector('header h1').textContent = bookStore.name;
@@ -40,7 +41,7 @@ function renderBook(book) {
   pAuthor.textContent = book.author;
   
   const pPrice = document.createElement('p');
-  pPrice.textContent = formattedPrice(book.price);
+  pPrice.textContent = formatPrice(book.price);
   
   const img = document.createElement('img');
   img.src = book.imageUrl;
@@ -54,4 +55,13 @@ function renderBook(book) {
 
   document.querySelector('#book-list').append(li);
 }
+
+
+////////////////////////////////////////////
+// call render functions to populate the DOM
+////////////////////////////////////////////
+
+renderHeader(bookStore);
+renderFooter(bookStore);
+bookStore.inventory.forEach(renderBook);
 
