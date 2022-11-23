@@ -160,4 +160,6 @@ otherForm.addEventListener('submit', (e) => {
 ## Let's Code!
 
 - Users should be able to delete books by clicking the delete button at the bottom of the book card
+- Users should be able to click the New Book button to display the form to add a new book
+- Users should be able to hide the New Book form by clicking the button again or hitting the Escape key on their keyboard
 - Users should be able to add a book by filling in the form at the top of the page (the book they add should appear in the DOM)
