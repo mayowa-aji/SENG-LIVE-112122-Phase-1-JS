@@ -1,8 +1,6 @@
-function priceFormatter(price) {
-  let formattedPrice = Number(price).toFixed(2);
-  return `$${formattedPrice}`;
-}
-// Render Functions
+///////////////////
+// render functions
+///////////////////
 function renderHeader(bookStore) {
   document.querySelector('header h1').textContent = bookStore.name;
 }
@@ -36,7 +34,7 @@ function renderBook(book) {
   pAuthor.textContent = book.author;
   
   const pPrice = document.createElement('p');
-  pPrice.textContent = `${priceFormatter(book.price)}`;
+  pPrice.textContent = formatPrice(book.price);
   
   const pStock = document.createElement('p');
   pStock.className = "grey";
@@ -63,48 +61,80 @@ function renderBook(book) {
   document.querySelector('#book-list').append(li);
 }
 
-function priceFormatter(price) {
+function formatPrice(price) {
   let formattedPrice = Number(price).toFixed(2);
   return `$${formattedPrice}`;
 }
 
-bookStore.inventory.forEach(renderBook);
 
-// Event handlers 
-const form = document.querySelector('#book-form');
+///////////////////
+// Event Handlers
+///////////////////
 
+const toggleFormButton = document.querySelector('#toggleForm');
+const newBookForm = document.querySelector('#book-form');
+let bookFormVisible = false;
 
-// this is what a book looks like
-// {
-//   id:1,
-//   title: 'Eloquent JavaScript: A Modern Introduction to Programming',
-//   author: 'Marjin Haverbeke',
-//   price: 10.00,
-//   reviews: [{userID: 1, content:'Good book, but not great for new coders'}],
-//   inventory: 10,
-//   imageUrl: 'https://images-na.ssl-images-amazon.com/images/I/51IKycqTPUL._SX218_BO1,204,203,200_QL40_FMwebp_.jpg',
-// }
-// we can use a book as an argument for renderBook!  This will add the book's info to the webpage.
-form.addEventListener('submit', (e) => { 
+// hide and show the new book form when toggle buton is clicked
+toggleFormButton.addEventListener('click', (e) => {
+  bookFormVisible = !bookFormVisible;
+  newBookForm.classList.toggle('collapsed');
+  toggleFormButton.textContent = bookFormVisible ? 'Hide Book Form' : 'New Book';
+  // equivalent to the below
+  // if (bookFormVisible) {
+  //   toggleFormButton.textContent = 'Hide Book Form';
+  // } else {
+  //   toggleFormButton.textContent = 'New Book';
+  // }
+});
+
+// also hide the form when it's visible and the escape key is pressed
+
+window.addEventListener('keydown', (e) => {
+  console.log(e)
+  if (e.key === "Escape" && bookFormVisible) {
+    bookFormVisible = !bookFormVisible;
+    newBookForm.classList.toggle('collapsed');
+    toggleFormButton.textContent = bookFormVisible ? 'Hide Book Form' : 'New Book';
+  }
+})
+
+// handle submitting new book form
+newBookForm.addEventListener('submit', (e) => {
   e.preventDefault();
-  // pull the info for the new book out of the form
+
+  // invoke renderBook to add the book data from the form into the DOM
+  // renderBook expects a book object as an argument, so we need to build that
+  // book should look something like this:
+  // {
+  //   id:1,
+  //   title: 'Eloquent JavaScript: A Modern Introduction to Programming',
+  //   author: 'Marjin Haverbeke',
+  //   price: 10.00,
+  //   reviews: [{userID: 1, content:'Good book, but not great for new coders'}],
+  //   inventory: 10,
+  //   imageUrl: 'https://images-na.ssl-images-amazon.com/images/I/51IKycqTPUL._SX218_BO1,204,203,200_QL40_FMwebp_.jpg',
+  // }
+  console.dir(e.target)
   const book = {
     title: e.target.title.value,
     author: e.target.author.value,
-    price: e.target.price.value,
+    price: Number.parseFloat(e.target.price.value),
     reviews: [],
-    inventory: e.target.inventory.value,
+    inventory: Number.parseInt(e.target.inventory.value),
     imageUrl: e.target.imageUrl.value
   }
-  // pass the info as an argument to renderBook for display!
   renderBook(book);
-  e.target.reset();
-})
+});
 
-//Invoking functions
+
+////////////////////////////////////////////
+// call render functions to populate the DOM
+////////////////////////////////////////////
+
 renderHeader(bookStore)
 renderFooter(bookStore)
-bookStore.inventory.forEach(renderBookCard)
+bookStore.inventory.forEach(renderBook)
 document.querySelector('#book-form').addEventListener('submit', handleForm)
 
 

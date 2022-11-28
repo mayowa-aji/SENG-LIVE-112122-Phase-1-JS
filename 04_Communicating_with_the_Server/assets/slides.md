@@ -86,7 +86,52 @@ Open devtools in Chrome for the slideshow and demo the network tab.
 
 ---
 
-### Synchronous vs Asynchronous Code
+### HTTP Verbs & CRUD
+
+
+Method | CRUD Action | Description
+---------|----------|---------
+ GET | READ | Retrieves resources
+ POST | CREATE | Creates resources
+ PUT/PATCH | UPDATE | Updates resources
+ DELETE | DESTROY | Deletes resources
+
+
+---
+
+<iframe 
+  src="https://http.cat/"
+  style="width: 1500px; max-width: 100%; height: 900px; max-height: 60%"
+></iframe>
+
+
+---
+
+### Synchronous vs Asynchronous Code examples
+
+<div style="display: flex; flex-direction: row">
+  <div style="width: 50%">
+    
+  #### Sync callbacks
+  - `forEach`
+  - `map`
+  - `filter`
+  - `find`
+    
+  </div>
+  <div style="width: 50%">
+
+  #### Async callbacks
+  - `addEventListener`
+  - `setTimeout`
+  - `Promise.then`
+
+  </div>
+</div>
+
+---
+
+### Synchronous vs Asynchronous code explained
 
 <img src="https://cdn-images-1.medium.com/max/749/0*arL3BF9VGPooOPIT" alt="Synchronous vs Asynchronous code diagram" />
 
@@ -118,26 +163,6 @@ Open devtools in Chrome for the slideshow and demo the network tab.
 <img src="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/promises.png" alt="Promise Diagram" />
 
 * <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise" rel="noopener noreferrer" target="_blank">MDN - Promise</a> * <a href="https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch" rel="noopener noreferrer" target="_blank">MDN - Using Fetch</a>
-
----
-
-### HTTP Verbs & CRUD
-
-
-Method | CRUD Action | Description
----------|----------|---------
- GET | READ | Retrieves resources
- POST | CREATE | Creates resources
- PUT/PATCH | UPDATE | Updates resources
- DELETE | DESTROY | Deletes resources
-
-
----
-
-<iframe 
-  src="https://http.cat/"
-  style="width: 1500px; max-width: 100%; height: 900px; max-height: 60%"
-></iframe>
 
 ---
 
@@ -248,3 +273,27 @@ json-server --watch db.json
 <img src="https://media.giphy.com/media/BZhvKu7MT0n2voRhtf/giphy.gif" alt="Woman in plug running and jumping into an outlet" />
 
 - If you run `json-server --watch db.json`, then your terminal will need to be in the same working directory as the db.json file. 
+
+---
+
+### Killing a zombie server
+
+#### Diagnosis
+
+```
+Some error occurred Error: listen EADDRINUSE: address already in use 127.0.0.1:3000
+```
+
+#### Cure
+
+```
+kill $(lsof -t -i:3000)
+```
+
+#### Regimen 
+
+```
+alias k3000="kill $(lsof -t -i:3000)"
+```
+
+I've created an alias for this fix, `k3000`, so I can just type `k3000` in my terminal to run this command. To add your own alias, you'll want to put this code in your terminal profile: `~/.zshrc`, `~/.bash_profile`, or `~/.profile`
