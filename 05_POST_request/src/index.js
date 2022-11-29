@@ -62,7 +62,7 @@ function renderBook(book) {
   pAuthor.textContent = book.author;
   
   const pPrice = document.createElement('p');
-  pPrice.textContent = `${priceFormatter(book.price)}`;
+  pPrice.textContent = `${formatPrice(book.price)}`;
   
   const pStock = document.createElement('p');
   pStock.className = "grey";
@@ -89,8 +89,25 @@ function renderBook(book) {
   document.querySelector('#book-list').append(li);
 }
 
-function priceFormatter(price) {
-  let formattedPrice = Number(price).toFixed(2);
+function renderError(error) {
+  const main = document.querySelector('main');
+  const errorDiv = document.createElement('div');
+  errorDiv.className = 'error';
+  if (error.message === "Failed to fetch") {
+    errorDiv.textContent = "Whoops! Looks like you forgot to start your JSON-server!"
+  } else {
+    errorDiv.textContent = error;
+  }
+  main.prepend(errorDiv);
+  window.addEventListener('keydown', (e) => {
+    if (e.key === "Escape") {
+      errorDiv.remove();
+    }
+  })
+}
+
+function formatPrice(price) {
+  let formattedPrice = Number.parseFloat(price).toFixed(2);
   return `$${formattedPrice}`;
 }
 
@@ -99,14 +116,13 @@ const toggleBookFormButton = document.querySelector('#toggleBookForm');
 let bookFormVisible = false;
 
 function toggleBookForm() {
-  const form = document.querySelector('#book-form')
-  form.classList.toggle('collapsed')
-  if (form.classList.contains('collapsed')) {
-    bookFormVisible = false;
-    toggleBookFormButton.textContent = "New Book";
-  } else {
-    bookFormVisible = true;
+  const form = document.querySelector('#book-form');
+  form.classList.toggle('collapsed');
+  bookFormVisible = !bookFormVisible;
+  if (bookFormVisible) {
     toggleBookFormButton.textContent = "Hide Book form";
+  } else {
+    toggleBookFormButton.textContent = "New Book";
   }
 }
 
@@ -116,22 +132,19 @@ const toggleStoreFormButton = document.querySelector('#toggleStoreForm');
 let storeFormVisible = false;
 
 function toggleStoreForm() {
-  const form = document.querySelector('#store-form')
-  form.classList.toggle('collapsed')
-  if (form.classList.contains('collapsed')) {
-    storeFormVisible = false;
-    toggleStoreFormButton.textContent = "New Store";
-  } else {
-    storeFormVisible = true;
+  const form = document.querySelector('#store-form');
+  form.classList.toggle('collapsed');
+  storeFormVisible = !storeFormVisible;
+  if (storeFormVisible) {
     toggleStoreFormButton.textContent = "Hide Store form";
+  } else {
+    toggleStoreFormButton.textContent = "New Store";
   }
 }
 
 toggleStoreFormButton.addEventListener('click', toggleStoreForm);
 
 window.addEventListener('keydown', (e) => {
-  console.log(e);
-  console.log(e.key);
   if (e.key === "Escape") {
     if (storeFormVisible) {
       toggleStoreForm();
@@ -159,7 +172,7 @@ bookForm.addEventListener('submit', (e) => {
   const book = {
     title: e.target.title.value,
     author: e.target.author.value,
-    price: Number(e.target.price.value),
+    price: Number.parseFloat(e.target.price.value),
     reviews: [],
     inventory: Number(e.target.inventory.value),
     imageUrl: e.target.imageUrl.value
@@ -176,8 +189,7 @@ bookForm.addEventListener('submit', (e) => {
 
 // Invoking functions    
 // fetching our data!
-fetch('http://localhost:3000/stores')
-  .then((res) => res.json())
+getJSON('http://localhost:3000/stores')
   .then((stores) => {
     // this populates a select tag with options so we can switch between stores on our web page
     renderStoreSelectionOptions(stores);
@@ -186,30 +198,12 @@ fetch('http://localhost:3000/stores')
   })
   .catch(err => {
     console.error(err);
-    // makeError('Make sure to start json-server!') // I'm skipping this so we only see this error message once if JSON-server is actually not running
+    // renderError('Make sure to start json-server!') // I'm skipping this so we only see this error message once if JSON-server is actually not running
   });
 
 // load all the books and render them
-fetch("http://localhost:3000/books")
-  .then((res) => res.json())
+getJSON("http://localhost:3000/books")
   .then((books) => {
-    console.log(books);
     books.forEach(book => renderBook(book))
   })
-  .catch(err => {
-    console.error(err);
-    makeError('Make sure to start json-server!')
-  });
-
-function makeError(message) {
-  const main = document.querySelector('main');
-  const errorDiv = document.createElement('div');
-  errorDiv.className = "error";
-  errorDiv.textContent = message;
-  main.prepend(errorDiv);
-  window.addEventListener('keydown', (e) => {
-    if (e.key === "Escape") {
-      errorDiv.remove();
-    }
-  })
-}
+  .catch(renderError);

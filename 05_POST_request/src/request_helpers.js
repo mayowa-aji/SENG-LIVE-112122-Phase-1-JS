@@ -1,5 +1,12 @@
 function getJSON(url) {
-  return fetch(url).then(response => response.json())
+  return fetch(url)
+    .then(response => {
+      if (response.ok) {
+        return response.json()
+      } else {
+        throw (response.statusText)
+      }
+    })
 }
 
 function postJSON(url, data) {
@@ -10,5 +17,11 @@ function postJSON(url, data) {
     },
     body: JSON.stringify(data)
   })
-    .then(response => response.json())
+    .then(response => {
+      if (response.ok) {
+        return response.json()
+      } else {
+        throw (response.statusText)
+      }
+    })
 }

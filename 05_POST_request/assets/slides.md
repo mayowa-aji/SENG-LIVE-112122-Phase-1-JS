@@ -75,17 +75,25 @@ width: 1400
 
 ## Working with JSON
 
-- Fetch to URL returns Promise
-- response.json() returns a Promise for the parsed body 
+- Fetch to URL returns Promise for a response
+- response.json() returns a Promise for the parsed body
+- Fetch returns a resolved response even when we get an error from the API server. 
 
-This happens consistently as we send fetch requests, so we'll end up typing a lot of boilerplate each time. {.fragment}
+This happens consistently as we send fetch requests, so we'll end up typing a lot of boilerplate each time–especially when we want to add a catch to our fetch call. {.fragment}
 
 ---
 
 ## Putting boilerplate into functions
 
 <pre><code data-line-numbers>function getJSON(url) {
-  return fetch(url).then(response => response.json())
+  return fetch(url)
+    .then(response => {
+      if (response.ok) {
+        return response.json()
+      } else {
+        throw (response.statusText)
+      }
+    })
 }
 
 function postJSON(url, data) {
@@ -96,5 +104,11 @@ function postJSON(url, data) {
     },
     body: JSON.stringify(data)
   })
-    .then(response => response.json())
+    .then(response => {
+      if (response.ok) {
+        return response.json()
+      } else {
+        throw (response.statusText)
+      }
+    })
 }</code></pre>
