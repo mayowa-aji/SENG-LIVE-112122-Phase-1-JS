@@ -61,7 +61,7 @@ function renderBook(book) {
   pAuthor.textContent = book.author;
   
   const pPrice = document.createElement('p');
-  pPrice.textContent = priceFormatter(book.price);
+  pPrice.textContent = formatPrice(book.price);
   
   const pStock = document.createElement('p');
   pStock.className = "grey";
@@ -88,6 +88,23 @@ function renderBook(book) {
   document.querySelector('#book-list').append(li);
 }
 
+function renderError(error) {
+  const main = document.querySelector('main');
+  const errorDiv = document.createElement('div');
+  errorDiv.className = 'error';
+  if (error.message === "Failed to fetch") {
+    errorDiv.textContent = "Whoops! Looks like you forgot to start your JSON-server!"
+  } else {
+    errorDiv.textContent = error;
+  }
+  main.prepend(errorDiv);
+  window.addEventListener('keydown', (e) => {
+    if (e.key === "Escape") {
+      errorDiv.remove();
+    }
+  })
+}
+
 // New Function to populate the store form with a store's data to update 
 function populateStoreEditForm(store) {
   const form = document.querySelector('#store-form');
@@ -99,8 +116,8 @@ function populateStoreEditForm(store) {
   showStoreForm();
 }
 
-function priceFormatter(price) {
-  let formattedPrice = Number(price).toFixed(2);
+function formatPrice(price) {
+  let formattedPrice = Number.parseFloat(price).toFixed(2);
   return `$${formattedPrice}`;
 }
 
@@ -158,6 +175,7 @@ function showStoreForm() {
   document.querySelector('#store-form').classList.remove('collapsed');
   storeFormVisible = true;
   toggleStoreFormButton.textContent = "Hide Store form";
+  storeForm.querySelector('[type="submit"]').value = storeEditMode ? "SAVE STORE" : "ADD STORE";
 }
 
 toggleStoreFormButton.addEventListener('click', toggleStoreForm);
@@ -188,7 +206,8 @@ bookForm.addEventListener('submit', (e) => {
     .then(book => {
       renderBook(book)
       e.target.reset();
-    });  
+    })
+    .catch(renderError);  
 })
 
 // store form submit
@@ -213,17 +232,11 @@ storeForm.addEventListener('submit', (e) => {
   if (storeEditMode) {
     // ✅ write code for updating the store here
     
-    storeEditMode = false;
+    hideStoreForm()
   } else {
-    fetch("http://localhost:3000/stores", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(store)
-    })
-      .then(res => res.json())
+    postJSON("http://localhost:3000/stores", store)
       .then(addSelectOptionForStore)
+      .catch(renderError);
   }
   e.target.reset();
 })
@@ -234,6 +247,7 @@ let storeEditMode = false;
 
 editStoreBtn.addEventListener('click', (e) => {
   const selectedStoreId = document.querySelector('#store-selector').value;
+  storeEditMode = true;
   getJSON(`http://localhost:3000/stores/${selectedStoreId}`)
     .then(populateStoreEditForm)
 })
@@ -256,18 +270,5 @@ getJSON('http://localhost:3000/books')
   .then(books => books.forEach(renderBook))
   .catch(err => {
     console.error(err);
-    makeError('Make sure to start json-server!')
+    renderError('Make sure to start json-server!')
   });
-
-function makeError(message) {
-  const main = document.querySelector('main');
-  const errorDiv = document.createElement('div');
-  errorDiv.className = "error";
-  errorDiv.textContent = message;
-  main.prepend(errorDiv);
-  window.addEventListener('keydown', (e) => {
-    if (e.key === "Escape") {
-      errorDiv.remove();
-    }
-  })
-}
